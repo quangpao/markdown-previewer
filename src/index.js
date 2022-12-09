@@ -1,6 +1,10 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+
+import 'highlight.js/styles/default.css'
+//import boostrap from node_modules
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { marked } from 'marked';
 import parse from 'html-react-parser'
@@ -10,7 +14,7 @@ const defaultText = [
   '## This is a sub-heading...',
   '### And here\'s some other cool stuff:',
   'Heres some code, `<div></div>`, between 2 backticks.',
-  '```',
+  '```javascript',
   '// this is multi-line code:',
   'function anotherExample(firstLine, lastLine) {',
   '  if (firstLine == \'```\' && lastLine == \'```\') {',
@@ -61,16 +65,29 @@ class MarkdownPreviewer extends React.Component {
   }
 
   render() {
+
+    
+    marked.setOptions({
+      renderer: new marked.Renderer(),
+      highlight: function(code, lang) {
+        const hljs = require('highlight.js')
+        const language = hljs.getLanguage(lang) ? lang : 'javascript';
+        return hljs.highlight(code, { language }).value
+      }, 
+      langPrefix: 'hljs language-',
+      breaks: true,
+    })
+
     console.log(this.state.textArea)
     const fullText = this.state.textArea.join('\n')
     return (
-      <div className='container'>
-        <div id='textbox'>
+      <div>
+        <div id='textWrap'>
           <textarea id='editor' defaultValue={fullText} onChange={this.onChangeHandle}/>
         </div>
-        <div id='resultbox'>
+        <div id='resultWrap'>
           <div id='preview'>
-            {parse(marked.parse(this.state.textArea.join('\n')))}
+            {parse(marked.parse(fullText))}
           </div>
         </div>
       </div>

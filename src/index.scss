@@ -1,0 +1,47 @@
+$background-color: #c0d8d8;
+
+body {
+    background: #87b5b5;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+%shared {
+    border: 1px solid #1d2f2f;
+    background-color: $background-color;
+    box-shadow: 1px 1px 10px #3a5f5f;
+}
+
+#textWrap {
+    max-width: 600px;
+    margin: 1.125rem auto;
+}
+
+#resultWrap {
+    @extend %shared;
+    max-width: 800px;
+    margin: 1.125rem auto;
+    min-height: 200px;
+}
+
+#editor {
+    @extend %shared;
+    background-color: $background-color;
+    width: 98.6%;
+    min-height: 200px;
+}
+
+textarea {
+    box-sizing: unset;
+    padding-left: 5px;
+    font-family: monospace;
+}
+
+#preview {
+    padding: 0 1rem;
+}
